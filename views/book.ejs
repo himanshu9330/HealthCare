@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Appointment</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      margin: 0;
+      padding: 20px;
+      padding-top: 100px; /* offset for sticky navbar */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      animation: bgFadeIn 2s ease forwards;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgFadeIn {
+      from {
+        opacity: 0;
+        background-position: 0% 50%;
+      }
+      to {
+        opacity: 1;
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Sticky Navbar */
+    .navbar {
+      background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+      background-size: 300% 100%;
+      animation: navbarGradient 8s ease infinite;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: 100vw;
+      z-index: 1000;
+      transition: all 0.4s ease;
+    }
+
+    @keyframes navbarGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .navbar:hover {
+      background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      filter: brightness(1.1) saturate(1.2);
+      transform: scale(1.001);
+    }
+
+    .navbar .brand {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #fff;
+      animation: fadeInLeft 1s ease-out;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      animation: fadeInRight 1s ease-out;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      padding: 8px 12px;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: 0;
+      background-color: #ffeb3b;
+      transition: width 0.3s ease;
+    }
+
+    .navbar a:hover::after {
+      width: 100%;
+    }
+
+    .navbar a:hover {
+      color: #ffeb3b;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 10px;
+        gap: 10px;
+      }
+    }
+
+    .container {
+      background-color: #ffffffdd;
+      max-width: 500px;
+      width: 100%;
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2), 0 12px 48px rgba(0, 0, 0, 0.1);
+      animation: containerDrop 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      transform: translateY(-60px);
+      opacity: 0;
+    }
+
+    @keyframes containerDrop {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      color: #01579b;
+      margin-bottom: 35px;
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      position: relative;
+    }
+
+    h1::after {
+      content: "";
+      width: 70px;
+      height: 4px;
+      background: #0288d1;
+      display: block;
+      margin: 10px auto 0 auto;
+      border-radius: 2px;
+      box-shadow: 0 0 15px #0288d1aa;
+      animation: pulseLine 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseLine {
+      from {
+        box-shadow: 0 0 15px #0288d1aa;
+        width: 70px;
+      }
+      to {
+        box-shadow: 0 0 30px #0288d1ee;
+        width: 90px;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      animation: fadeSlideUp 0.8s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    label {
+      font-weight: 600;
+      color: #0277bd;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    input, select {
+      padding: 12px 14px;
+      border: 2px solid #90caf9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      color: #01579b;
+      background: #e3f2fd;
+    }
+
+    input:focus, select:focus {
+      border-color: #0288d1;
+      box-shadow: 0 0 8px rgba(2, 136, 209, 0.5);
+      outline: none;
+      background: #bbdefb;
+    }
+
+    button {
+      background: linear-gradient(135deg, #0288d1, #01579b);
+      color: white;
+      border: none;
+      padding: 15px 0;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.25s ease;
+      box-shadow: 0 6px 20px rgba(2, 136, 209, 0.4);
+      user-select: none;
+      animation: fadeSlideUp 1s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #01579b, #003c8f);
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(1, 87, 155, 0.7);
+    }
+
+    .error-message {
+      background-color: #ffebee;
+      border-left: 6px solid #d32f2f;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      color: #b71c1c;
+      font-weight: 700;
+      border-radius: 6px;
+      box-shadow: 0 0 12px #d32f2f44;
+      animation: fadeSlideUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .error-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      input, select {
+        font-size: 0.95rem;
+      }
+
+      button {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+
+  <script>
+    function validateForm(event) {
+      const name = document.getElementById('name').value.trim();
+      const age = document.getElementById('age').value.trim();
+      const gender = document.getElementById('gender').value;
+      const symptoms = document.getElementById('symptoms').value.trim();
+      const timeSlot = document.getElementById('timeSlot').value.trim();
+
+      if (!name || !age || !gender || !symptoms || !timeSlot) {
+        alert("⚠️ Please fill out all fields before submitting.");
+        event.preventDefault();
+      }
+    }
+
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const error = params.get('error');
+      const doctorError = params.get('doctorError');
+
+      if (error) {
+        const errorBox = document.getElementById('errorBox');
+        errorBox.textContent = decodeURIComponent(error);
+        errorBox.classList.add('show');
+      }
+
+      if (doctorError === '1') {
+        alert("No doctor available for these symptoms right now.");
+        setTimeout(() => {
+          window.location.href = "/patient/find";
+        }, 5000);
+      }
+    };
+  </script>
+</head>
+<body>
+
+  <!-- ✅ Sticky Navbar -->
+  <%- include('./part/nav') %>
+
+  <!-- ✅ Appointment Form -->
+  <div class="container">
+    <h1>Book an Appointment</h1>
+
+    <div id="errorBox" class="error-message"></div>
+
+    <form action="/book/new-patient" method="POST" onsubmit="validateForm(event)">
+      <div class="form-group">
+        <label for="name">Patient Name:</label>
+        <input type="text" name="name" id="name" placeholder="Enter full name" required />
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" placeholder="Enter age" min="0" max="150" required />
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender" required>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="symptoms">Symptoms (comma-separated):</label>
+        <input type="text" name="symptoms" id="symptoms" placeholder="E.g., cough, fever, headache" required />
+      </div>
+      <div class="form-group">
+        <label for="timeSlot">Appointment Time:</label>
+        <input type="datetime-local" name="timeSlot" id="timeSlot" required />
+      </div>
+
+      <button type="submit">Book Now</button>
+    </form>
+  </div>
+</body>
+</html>

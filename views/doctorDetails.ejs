@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Profile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      animation: bgFadeIn 2s ease forwards;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    @keyframes bgFadeIn {
+      from {
+        opacity: 0;
+        background-position: 0% 50%;
+      }
+      to {
+        opacity: 1;
+        background-position: 100% 50%;
+      }
+    }
+
+    .container {
+      background-color: #ffffffdd;
+      max-width: 600px;
+      width: 100%;
+      padding: 40px 50px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      animation: slideUp 1s ease forwards;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: #2e7d32;
+      margin: 12px auto 0 auto;
+      border-radius: 2px;
+      box-shadow: 0 0 10px #2e7d32aa;
+      animation: pulseLine 2s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseLine {
+      from {
+        width: 60px;
+        box-shadow: 0 0 10px #2e7d32aa;
+      }
+      to {
+        width: 80px;
+        box-shadow: 0 0 18px #2e7d32ff;
+      }
+    }
+
+    .info {
+      margin: 20px 0;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .info:nth-child(2) { animation-delay: 0.2s; }
+    .info:nth-child(3) { animation-delay: 0.3s; }
+    .info:nth-child(4) { animation-delay: 0.4s; }
+    .info:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .label {
+      font-weight: bold;
+      color: #01579b;
+      min-width: 160px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.95rem;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1 1 48%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-view {
+      background: linear-gradient(135deg, #2196f3, #0d47a1);
+    }
+
+    .btn-view:hover {
+      background: linear-gradient(135deg, #0d47a1, #1565c0);
+      transform: scale(1.05);
+    }
+
+    .btn-add {
+      background: linear-gradient(135deg, #43a047, #2e7d32);
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(135deg, #2e7d32, #1b5e20);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+        flex: 1 1 100%;
+      }
+
+      .label {
+        min-width: 120px;
+      }
+
+      .info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Universal Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding-top: 80px; /* space for sticky navbar */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Sticky Navbar */
+  .navbar {
+    background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+    background-size: 300% 100%;
+    animation: navbarGradient 8s ease infinite;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.4s ease;
+  }
+
+  @keyframes navbarGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .navbar:hover {
+    background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1) saturate(1.2);
+    transform: scale(1.001);
+  }
+
+  .navbar .brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;
+    animation: fadeInLeft 1s ease-out;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: fadeInRight 1s ease-out;
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    padding: 8px 12px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: 0;
+    background-color: #ffeb3b;
+    transition: width 0.3s ease;
+  }
+
+  .navbar a:hover::after {
+    width: 100%;
+  }
+
+  .navbar a:hover {
+    color: #ffeb3b;
+    transform: scale(1.05);
+  }
+
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    .navbar a {
+      width: 100%;
+    }
+  }
+  </style>
+</head>
+<body>
+  <%- include('./part/DOCnav', { doctor: doctor }) %>
+  <div class="container">
+    <h1>👨‍⚕️ Doctor Profile</h1>
+
+    <div class="info"><span class="label">Name:</span> <%= doctor.name %></div>
+    <div class="info"><span class="label">Email:</span> <%= doctor.email %></div>
+    <div class="info"><span class="label">Specialization:</span> <%= doctor.specialization %></div>
+    <div class="info"><span class="label">Symptoms Treated:</span> <%= doctor.symptoms.join(', ') %></div>
+
+    <div class="btn-group">
+      <a class="btn btn-view" href="/appointment/doctor/patients/<%= doctor._id %>/<%= new Date().toISOString().split('T')[0] %>">View Appointments</a>
+      <a class="btn btn-add" href="##<%= doctor._id %>">Add More Symptoms</a>
+    </div>
+  </div>
+</body>
+</html>

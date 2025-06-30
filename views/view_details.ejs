@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Patient Details</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      padding: 40px 20px;
+      color: #222;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInBody 1.2s ease forwards;
+    }
+
+    @keyframes fadeInBody {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      background: #fff;
+      max-width: 700px;
+      width: 100%;
+      padding: 40px 50px;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1), 0 6px 15px rgba(0, 0, 0, 0.05);
+      animation: slideUp 1s ease forwards;
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #007bff;
+      font-weight: 700;
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 35px;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 4px rgba(0, 123, 255, 0.4);
+    }
+
+    .info-panel {
+      background: linear-gradient(135deg, #f0f5fa 0%, #d9e6f6 100%);
+      padding: 30px 35px;
+      border-radius: 14px;
+      box-shadow: inset 0 0 10px rgba(0, 123, 255, 0.1);
+      margin-bottom: 35px;
+      animation: fadeInUp 0.9s ease-in-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(25px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .info {
+      margin-bottom: 22px;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #2a3d66;
+    }
+
+    .info strong {
+      display: inline-block;
+      width: 130px;
+      color: #0056b3;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    ul.history {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #2a3d66;
+    }
+
+    ul.history li {
+      background: #dbe7fb;
+      border-left: 5px solid #0056b3;
+      margin-bottom: 15px;
+      padding: 18px 22px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 86, 179, 0.15);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    ul.history li:hover {
+      background-color: #c5d8fb;
+      transform: scale(1.02);
+    }
+
+    .back-link,
+    .add-symptom-btn,
+    .generate-prescription-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      user-select: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .back-link {
+      background: linear-gradient(135deg, #0288d1, #01579b);
+      color: white;
+      margin-top: 30px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(1, 87, 155, 0.4);
+    }
+
+    .back-link:hover {
+      background: linear-gradient(135deg, #0277bd, #013b71);
+      transform: translateY(-3px);
+    }
+
+    .add-symptom-btn {
+      background: linear-gradient(135deg, #ffc107, #ffb300);
+      color: #333;
+      margin: 0 auto 25px auto;
+      display: block;
+      width: max-content;
+      box-shadow: 0 6px 12px rgba(255, 193, 7, 0.4);
+    }
+
+    .add-symptom-btn:hover {
+      background: linear-gradient(135deg, #e0a800, #c79100);
+      transform: translateY(-3px);
+    }
+
+    .generate-prescription-btn {
+      background: linear-gradient(135deg, #28a745, #1e7e34);
+      color: white;
+      margin: 0 auto 10px auto;
+      display: block;
+      width: max-content;
+      box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+    }
+
+    .generate-prescription-btn:hover {
+      background: linear-gradient(135deg, #218838, #19692c);
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 30px 25px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .info-panel {
+        padding: 25px 20px;
+      }
+
+      .info {
+        font-size: 1rem;
+      }
+
+      .info strong {
+        width: 110px;
+      }
+
+      .back-link,
+      .add-symptom-btn,
+      .generate-prescription-btn {
+        padding: 10px 22px;
+        font-size: 0.9rem;
+      }
+    }
+
+
+    /* Reset + Layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-top: 75px; /* offset for sticky navbar */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Sticky Navbar */
+.navbar {
+  background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+  background-size: 300% 100%;
+  animation: navbarGradient 8s ease infinite;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s ease;
+}
+
+/* Gradient animation */
+@keyframes navbarGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover effect */
+.navbar:hover {
+  background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1) saturate(1.2);
+  transform: scale(1.001);
+}
+
+/* Brand */
+.navbar .brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  animation: fadeInLeft 1s ease-out;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  animation: fadeInRight 1s ease-out;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 12px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #ffeb3b;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar a:hover {
+  color: #ffeb3b;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  .navbar a {
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <%- include('./part/DOCnav', {doctor:doctor}) %>
+  <div class="container" role="main" aria-label="Patient details container">
+    <h1>Patient Details</h1>
+
+    <div class="info-panel">
+      <div class="info"><strong>Name:</strong> <%= patient.name %></div>
+      <div class="info"><strong>Age:</strong> <%= patient.age %></div>
+      <div class="info"><strong>Gender:</strong> <%= patient.gender %></div>
+      <div class="info"><strong>Symptoms:</strong> <%= patient.symptoms.join(', ') %></div>
+
+      <a href="/patient/add-symptoms/<%= patient._id %>" class="add-symptom-btn" role="button">Add Symptoms</a>
+
+      <div class="info">
+        <strong>History:</strong>
+        <% if (patient.history && patient.history.length > 0) { %>
+          <ul class="history">
+            <% patient.history.forEach(entry => { %>
+              <li>
+                <strong>Date:</strong> <%= new Date(entry.date).toLocaleString() %><br />
+                <strong>Symptoms:</strong> <%= entry.symptoms.join(', ') %><br />
+                <% if (entry.prescription.length > 0) { %>
+                  <strong>Prescription:</strong> <%= entry.prescription.join(', ') %>
+                <% } else { %>
+                  <strong>Prescription:</strong> None
+                <% } %>
+              </li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p>No medical history available.</p>
+        <% } %>
+      </div>
+
+      <a href="/ai/generate-prescription/<%= patient._id %>" class="generate-prescription-btn" role="button">Generate AI Prescription</a>
+    </div>
+
+    <a href="javascript:history.back()" class="back-link" role="button">Back</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prescription</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      background: white;
+      padding: 35px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      animation: fadeInContainer 1s ease forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes fadeInContainer {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    ul {
+      list-style-type: square;
+      margin: 10px 0;
+      padding-left: 25px;
+    }
+
+    .pill-box {
+      background-color: #e9f7ef;
+      padding: 15px;
+      border-left: 5px solid #28a745;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .history-entry {
+      background: #f1f1f1;
+      padding: 14px 18px;
+      margin-bottom: 15px;
+      border-left: 5px solid #888;
+      border-radius: 8px;
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .no-data {
+      font-style: italic;
+      color: #777;
+    }
+
+    .back-link, .print-button {
+      display: inline-block;
+      margin-top: 20px;
+      margin-right: 10px;
+      padding: 12px 24px;
+      font-weight: bold;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .back-link {
+      background-color: #007bff;
+    }
+
+    .back-link:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+    }
+
+    .print-button {
+      background-color: #28a745;
+    }
+
+    .print-button:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+    }
+
+    @media print {
+      nav, .back-link, .print-button {
+        display: none;
+      }
+      body {
+        background: white;
+        padding: 0;
+      }
+      .container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      nav .nav-links {
+        font-size: 0.9rem;
+      }
+      .pill-box, .history-entry {
+        padding: 12px;
+      }
+    }
+
+    
+  </style>
+</head>
+<body>
+
+ 
+
+  <div class="container">
+    <h1>AI Generated Prescription</h1>
+
+    <div class="section">
+      <p><span class="label">Patient Name:</span> <%= patient.name %></p>
+      <p><span class="label">Age:</span> <%= patient.age %></p>
+      <p><span class="label">Gender:</span> <%= patient.gender %></p>
+      <p><span class="label">Patient ID:</span> <%= patient._id %></p>
+      <p><span class="label">Doctor ID:</span> <%= patient.doctorId %></p>
+    </div>
+
+    <div class="section">
+      <h2>Symptoms</h2>
+      <ul>
+        <% patient.symptoms.forEach(symptom => { %>
+          <li><%= symptom %></li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Diagnosis</h2>
+      <% if (prescription.diagnosis) { %>
+        <p><%= prescription.diagnosis %></p>
+      <% } else { %>
+        <p class="no-data">No specific diagnosis provided.</p>
+      <% } %>
+    </div>
+
+    <div class="section">
+      <h2>Medicines</h2>
+      <% if (prescription.medicines && prescription.medicines.length > 0) { %>
+        <% prescription.medicines.forEach(med => { %>
+          <div class="pill-box">
+            <p><strong>Name:</strong> <%= med.name %></p>
+            <p><strong>Dosage:</strong> <%= med.dosage %></p>
+            <p><strong>Instructions:</strong> <%= med.instructions %></p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="no-data">No medicines recommended.</p>
+      <% } %>
+    </div>
+
+    <div class="section">
+      <h2>Patient History</h2>
+      <% if (patient.history && patient.history.length > 0) { %>
+        <% patient.history.forEach(entry => { %>
+          <div class="history-entry">
+            <p><strong>Date:</strong> <%= new Date(entry.date).toLocaleString() %></p>
+            <p><strong>Symptoms:</strong> <%= entry.symptoms.join(', ') %></p>
+            <p><strong>Prescription:</strong></p>
+            <ul>
+              <% entry.prescription.forEach(pres => { %>
+                <li>
+                  Diagnosis: <%= pres.diagnosis || 'N/A' %><br/>
+                  Medicines:
+                  <ul>
+                    <% pres.medicines.forEach(med => { %>
+                      <li><%= med.name %> - <%= med.dosage %>, <%= med.instructions %></li>
+                    <% }) %>
+                  </ul>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="no-data">No previous medical history available.</p>
+      <% } %>
+    </div>
+
+    <button class="print-button" onclick="window.print()">🖨️ Print Prescription</button>
+    <a href="/appointment/doctor/patients/<%= doctor._id %>/<%= new Date().toISOString().split('T')[0] %>" class="back-link">
+  Back to Today's Appointments
+</a>
+
+  </div>
+
+</body>
+</html>

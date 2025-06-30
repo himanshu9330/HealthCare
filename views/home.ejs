@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clinic Portal</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      animation: bgFadeIn 2s ease forwards;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center; /* Center vertically */
+      overflow-y: auto;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      background: linear-gradient(145deg, #ffffffaa, #d0f0ffcc);
+      backdrop-filter: blur(14px);
+      padding: 50px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      animation: dropBounce 1.2s ease-out forwards;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    @keyframes dropBounce {
+      0% {
+        opacity: 0;
+        transform: translateY(-500px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(30px);
+      }
+      80% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #0d47a1;
+      margin-bottom: 40px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    a.button {
+      padding: 15px 40px;
+      background: linear-gradient(135deg, #2196f3, #0d47a1);
+      color: white;
+      text-decoration: none;
+      border-radius: 14px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      box-shadow: 0 0 15px rgba(33, 150, 243, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    a.button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+      transform: skewX(-45deg);
+      transition: 0.5s;
+      z-index: 0;
+    }
+
+    a.button:hover::before {
+      left: 100%;
+    }
+
+    a.button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(33, 150, 243, 0.7);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      a.button {
+        font-size: 1rem;
+        padding: 12px 28px;
+      }
+
+      .container {
+        padding: 30px 20px;
+      }
+    }  
+
+     /* Sticky Navbar */
+.navbar {
+  background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+  background-size: 300% 100%;
+  animation: navbarGradient 8s ease infinite;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background 0.5s ease;
+}
+
+/* Animated gradient keyframes */
+@keyframes navbarGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  padding-top: 75px; /* Offset for fixed navbar */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Brand Logo / Text */
+.navbar .brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  animation: fadeInLeft 1s ease-out;
+}
+
+/* Nav links container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  animation: fadeInRight 1s ease-out;
+}
+
+/* Individual nav links */
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 12px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover underline animation */
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #ffeb3b;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar a:hover {
+  color: #ffeb3b;
+  transform: scale(1.05);
+}
+
+/* Responsive behavior */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+  }
+}
+
+/* Simple fade-in animations */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Entire navbar hover effect */
+.navbar:hover {
+  background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  transform: scale(1.002);
+  transition: all 0.4s ease;
+}
+
+/* Smooth scale + glow transition */
+.navbar {
+  transition: all 0.4s ease; /* already included, just reaffirmed */
+}
+.navbar:hover {
+  filter: brightness(1.1) saturate(1.2);
+}
+
+  </style>
+</head>
+<body>
+  <%- include('./part/nav') %>
+  
+  <div class="container">
+    <h1>Welcome to the Clinic Portal</h1>
+    <div class="button-container">
+      <a class="button" href="/doctor">Doctor</a>
+      <a class="button" href="/patient">Book Appointment</a>
+    </div>
+  </div>
+</body>
+</html>

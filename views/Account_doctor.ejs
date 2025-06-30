@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Doctor Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      animation: bgFadeIn 2s ease forwards;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    @keyframes bgFadeIn {
+      from {
+        opacity: 0;
+        background-position: 0% 50%;
+      }
+      to {
+        opacity: 1;
+        background-position: 100% 50%;
+      }
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #01579b; /* Changed to match blue shade */
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #90caf9;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #01579b;
+      background: #e3f2fd;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #0288d1;
+      outline: none;
+      background: #bbdefb;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 6px 15px rgba(2, 136, 209, 0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #01579b;
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(1, 87, 155, 0.7);
+    }
+
+    .divider {
+      margin: 20px 0;
+      text-align: center;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .create-account-btn {
+      background-color: #43a047; /* green */
+      box-shadow: 0 6px 15px rgba(67, 160, 71, 0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .create-account-btn:hover {
+      background-color: #2e7d32;
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(46, 125, 50, 0.7);
+    }
+
+
+    
+    /* Apply universal box-sizing to prevent overflow from padding/margin */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Sticky Navbar */
+.navbar {
+  background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+  background-size: 300% 100%;
+  animation: navbarGradient 8s ease infinite;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;                  /* Ensure right boundary */
+  width: 100%;
+  max-width: 100vw;          /* Prevent going beyond screen */
+  z-index: 1000;
+  transition: all 0.4s ease;
+  overflow-x: hidden;
+}
+
+/* Animated gradient keyframes */
+@keyframes navbarGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Navbar hover effect */
+.navbar:hover {
+  background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1) saturate(1.2);
+  transform: scale(1.001); /* Keep scale subtle to avoid overflow */
+}
+
+/* Prevent content from hiding under navbar */
+body {
+  padding-top: 75px;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Brand */
+.navbar .brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  animation: fadeInLeft 1s ease-out;
+}
+
+/* Links container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  animation: fadeInRight 1s ease-out;
+}
+
+/* Links */
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 12px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #ffeb3b;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar a:hover {
+  color: #ffeb3b;
+  transform: scale(1.05);
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+  }
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+
+  </style>
+</head>
+<body>
+   <%- include("./part/nav") %>
+  <div class="container">
+    <h2>Doctor Login</h2>
+
+    <form method="POST" action="/doctor/login">
+    <input type="email" name="email" placeholder="Enter your email" value="<%= email || '' %>" required />
+    <input type="password" name="password" placeholder="Enter your password" required />
+    <button type="submit">Login</button>
+  </form>
+
+    <div class="divider">OR</div>
+
+    <form action="/doctor/signup" method="get">
+      <button type="submit" class="create-account-btn">Create New Account</button>
+    </form>
+  </div>
+
+  <% if (success) { %>
+  <script>
+    alert("Account created successfully!");
+  </script>
+  <% } %>
+
+</body>
+</html>

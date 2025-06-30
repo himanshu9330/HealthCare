@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Patients List</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      margin: 0;
+      padding: 40px 20px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      animation: bgFadeIn 2s ease forwards;
+    }
+
+    @keyframes bgFadeIn {
+      from {
+        opacity: 0;
+        background-position: 0% 50%;
+      }
+      to {
+        opacity: 1;
+        background-position: 100% 50%;
+      }
+    }
+
+    .container {
+      background: #ffffffee;
+      max-width: 700px;
+      width: 100%;
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: slideUp 1.2s ease forwards;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #01579b;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: #0288d1;
+      margin: 10px auto 0 auto;
+      border-radius: 2px;
+      box-shadow: 0 0 12px #0288d1aa;
+      animation: pulseLine 2.5s infinite alternate;
+    }
+
+    @keyframes pulseLine {
+      from {
+        box-shadow: 0 0 12px #0288d1aa;
+        width: 60px;
+      }
+      to {
+        box-shadow: 0 0 20px #0288d1ee;
+        width: 80px;
+      }
+    }
+
+    .no-patients {
+      font-style: italic;
+      color: #777;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 1.1rem;
+    }
+
+    ul.patient-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.patient-list li {
+      background-color: #e3f2fd;
+      margin-bottom: 20px;
+      padding: 18px 22px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      box-shadow: 0 3px 10px rgba(0,123,255,0.2);
+      animation: fadeInCard 0.8s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    ul.patient-list li:nth-child(1) { animation-delay: 0.2s; }
+    ul.patient-list li:nth-child(2) { animation-delay: 0.3s; }
+    ul.patient-list li:nth-child(3) { animation-delay: 0.4s; }
+    ul.patient-list li:nth-child(4) { animation-delay: 0.5s; }
+
+    @keyframes fadeInCard {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .btn-view {
+      display: inline-block;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #43a047, #2e7d32);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(67, 160, 71, 0.3);
+    }
+
+    .btn-view:hover {
+      background: linear-gradient(135deg, #2e7d32, #1b5e20);
+      transform: scale(1.05);
+    }
+
+    .back-link {
+  display: inline-block;
+  margin-top: 35px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0288d1, #01579b);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 6px 16px rgba(1, 87, 155, 0.4);
+}
+
+
+
+    .back-link:hover {
+      background: linear-gradient(135deg, #01579b, #003c8f);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      ul.patient-list li {
+        font-size: 1rem;
+        padding: 16px;
+      }
+
+      .btn-view, .back-link {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Reset + Layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-top: 75px; /* offset for sticky navbar */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Sticky Navbar */
+.navbar {
+  background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+  background-size: 300% 100%;
+  animation: navbarGradient 8s ease infinite;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s ease;
+}
+
+/* Gradient animation */
+@keyframes navbarGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover effect */
+.navbar:hover {
+  background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1) saturate(1.2);
+  transform: scale(1.001);
+}
+
+/* Brand */
+.navbar .brand {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  animation: fadeInLeft 1s ease-out;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  animation: fadeInRight 1s ease-out;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 12px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #ffeb3b;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar a:hover {
+  color: #ffeb3b;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  .navbar a {
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <%- include('./part/DOCnav', {doctor:doctor}) %>
+  <div class="container">
+    <h1>Patients for Doctor <%= doctor.name %> on <%= date %></h1>
+
+    <% if (patients.length === 0) { %>
+      <p class="no-patients">No patients found for this date.</p>
+    <% } else { %>
+      <ul class="patient-list">
+        <% patients.forEach((patient, index) => { %>
+          <li style="animation-delay: <%= 0.2 + index * 0.1 %>s;">
+            <strong>Name:</strong> <%= patient.name %><br />
+            <strong>Age:</strong> <%= patient.age %><br />
+            <strong>Gender:</strong> <%= patient.gender %><br />
+            <a href="/details/<%= patient._id %>" class="btn-view">View Details</a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <a href="/doctor/details/<%= doctor._id %>" class="back-link">Back to Doctor Profile</a>
+  </div>
+</body>
+</html>
