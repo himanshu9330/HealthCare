@@ -14,6 +14,7 @@ const {doctor_account}=require('./router/doctor')
 const{All_appointment}=require('./router/All_appointment')
 const {view_patient}=require('./router/view_details')
 const {AI_prescription}=require('./router/AI_prescription')
+const {patient_details}=require('./router/patient_details')
 
 const app=express();
 const port =8000;
@@ -45,6 +46,7 @@ app.use('/doctor',doctor_account);
 app.use('/appointment/doctor',All_appointment);
 app.use('/details',view_patient)
 app.use('/ai',AI_prescription)
+app.use('/patientdetail',patient_details);
 
 app.listen(port, ()=>{
     console.log("server start")

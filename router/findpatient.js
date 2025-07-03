@@ -13,10 +13,7 @@ newPatient.get('/', (req, res) => {
 newPatient.get('/search', async (req, res) => {
   const { patientId } = req.query;
 
-  if (!mongoose.Types.ObjectId.isValid(patientId)) {
-    return res.render('findpatient', { error: 'Invalid patient ID format' });
-  }
-
+  
   try {
     const foundPatient = await patient.findById(patientId).populate('history.doctorId').exec();
 

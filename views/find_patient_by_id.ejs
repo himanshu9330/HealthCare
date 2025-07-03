@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Find Patient</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
+      animation: bgFadeIn 2s ease forwards;
+      margin: 0;
+      padding: 20px;
+      padding-top: 90px; /* Prevent content from hiding under navbar */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Sticky Navbar */
+    .navbar {
+      background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
+      background-size: 300% 100%;
+      animation: navbarGradient 8s ease infinite;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar:hover {
+      background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+      filter: brightness(1.1) saturate(1.2);
+      transform: scale(1.001);
+    }
+
+    @keyframes navbarGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .navbar .brand {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #fff;
+      animation: fadeInLeft 1s ease-out;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      animation: fadeInRight 1s ease-out;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      padding: 8px 12px;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: 0;
+      background-color: #ffeb3b;
+      transition: width 0.3s ease;
+    }
+
+    .navbar a:hover::after {
+      width: 100%;
+    }
+
+    .navbar a:hover {
+      color: #ffeb3b;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .form-container {
+      margin: auto;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      width: 400px;
+      text-align: center;
+      margin-top: 120px;
+      border: 3px solid #1976d2;
+      position: relative;
+      z-index: 10;
+
+      /* Animations */
+      animation: 
+        fadeIn 1.2s ease both, 
+        floatUpDown 4s ease-in-out infinite, 
+        glowBorder 6s linear infinite, 
+        shadowPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Floating up and down */
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    /* Glowing border animation cycling colors */
+    @keyframes glowBorder {
+      0%, 100% {
+        border-color: #1976d2;
+        box-shadow: 0 0 10px #1976d2;
+      }
+      33% {
+        border-color: #0288d1;
+        box-shadow: 0 0 20px #0288d1;
+      }
+      66% {
+        border-color: #03a9f4;
+        box-shadow: 0 0 15px #03a9f4;
+      }
+    }
+
+    /* Shadow pulse */
+    @keyframes shadowPulse {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #1976d2;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #0288d1;
+      box-shadow: 0 0 8px #0288d1;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(25, 118, 210, 0.6);
+    }
+
+    button:hover {
+      background-color: #125ea2;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(18, 94, 162, 0.8);
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <%- include('./part/nav') %>
+
+  <!-- Form Box -->
+  <div class="form-container">
+    <h2>Find Patient by ID</h2>
+    <form action="/patientdetail/loginID" method="post">
+      <input type="text" name="patientId" placeholder="Enter Patient ID" required />
+      <button type="submit">🔍 Get Patient</button>
+    </form>
+  </div>
+
+</body>
+</html>
