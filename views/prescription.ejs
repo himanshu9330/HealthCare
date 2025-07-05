@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prescription</title>
   <style>
     * {
@@ -9,40 +10,39 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
-      background-size: 400% 400%;
-      animation: gradientShift 12s ease infinite;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #e3f2fd, #bbdefb);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 80px;
       margin: 0;
-      padding: 30px;
-      color: #333;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    
-
-    .container {
-      max-width: 850px;
-      margin: 40px auto;
-      background: white;
-      padding: 35px 40px;
-      border-radius: 15px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      animation: fadeInContainer 1s ease forwards;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    @keyframes fadeInContainer {
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
       to {
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      padding: 40px 50px;
+      max-width: 700px;
+      width: 100%;
+      color: #0d47a1;
+      animation: slideUp 1.2s ease forwards;
     }
 
     h1, h2 {
@@ -84,7 +84,6 @@
       border-left: 5px solid #28a745;
       margin-bottom: 15px;
       border-radius: 8px;
-      animation: fadeInUp 0.8s ease both;
     }
 
     .history-entry {
@@ -93,7 +92,6 @@
       margin-bottom: 15px;
       border-left: 5px solid #888;
       border-radius: 8px;
-      animation: fadeInUp 0.8s ease both;
     }
 
     .no-data {
@@ -101,7 +99,8 @@
       color: #777;
     }
 
-    .back-link, .print-button {
+    .back-link,
+    .print-button {
       display: inline-block;
       margin-top: 20px;
       margin-right: 10px;
@@ -111,7 +110,7 @@
       text-decoration: none;
       cursor: pointer;
       color: white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
 
@@ -139,10 +138,12 @@
       nav, .back-link, .print-button {
         display: none;
       }
+
       body {
         background: white;
         padding: 0;
       }
+
       .container {
         box-shadow: none;
         border: none;
@@ -154,22 +155,16 @@
       .container {
         padding: 20px;
       }
-      nav .nav-links {
-        font-size: 0.9rem;
-      }
+
       .pill-box, .history-entry {
         padding: 12px;
       }
     }
-
-    
   </style>
 </head>
 <body>
 
- 
-
-  <div class="container">
+  <main class="container">
     <h1>AI Generated Prescription</h1>
 
     <div class="section">
@@ -224,7 +219,7 @@
             <ul>
               <% entry.prescription.forEach(pres => { %>
                 <li>
-                  Diagnosis: <%= pres.diagnosis || 'N/A' %><br/>
+                  Diagnosis: <%= pres.diagnosis || 'N/A' %><br />
                   Medicines:
                   <ul>
                     <% pres.medicines.forEach(med => { %>
@@ -242,11 +237,10 @@
     </div>
 
     <button class="print-button" onclick="window.print()">🖨️ Print Prescription</button>
-    <a href="/appointment/doctor/patients/<%= doctor._id %>/<%= new Date().toISOString().split('T')[0] %>" class="back-link">
-  Back to Today's Appointments
-</a>
-
-  </div>
+    <a class="back-link" href="/appointment/doctor/patients/<%= doctor._id %>/<%= new Date().toISOString().split('T')[0] %>">
+      Back to Today's Appointments
+    </a>
+  </main>
 
 </body>
 </html>

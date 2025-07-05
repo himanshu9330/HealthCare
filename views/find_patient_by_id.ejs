@@ -4,141 +4,91 @@
   <meta charset="UTF-8" />
   <title>Find Patient</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --primary: #1976d2;
+      --accent: #42a5f5;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: rgba(255, 255, 255, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #81d4fa, #4fc3f7, #0288d1);
-      animation: bgFadeIn 2s ease forwards;
-      margin: 0;
-      padding: 20px;
-      padding-top: 90px; /* Prevent content from hiding under navbar */
-      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #e3f2fd, #bbdefb);
+      background-attachment: fixed;
+      background-size: cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      overflow-y: auto;
-      overflow-x: hidden;
+      align-items: center;
+      padding-top: 80px;
     }
 
-    @keyframes bgFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Sticky Navbar */
+    /* White Navbar with Logo */
     .navbar {
-      background: linear-gradient(90deg, #0288d1, #03a9f4, #0288d1);
-      background-size: 300% 100%;
-      animation: navbarGradient 8s ease infinite;
-      padding: 15px 30px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 12px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
       z-index: 1000;
-      transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
     }
 
-    .navbar:hover {
-      background: linear-gradient(90deg, #03a9f4, #0288d1, #03a9f4);
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-      filter: brightness(1.1) saturate(1.2);
-      transform: scale(1.001);
-    }
-
-    @keyframes navbarGradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .navbar .brand {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: #fff;
-      animation: fadeInLeft 1s ease-out;
-    }
-
-    .nav-links {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 15px;
-      animation: fadeInRight 1s ease-out;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      gap: 12px;
     }
 
-    .navbar a {
-      color: white;
+    .brand img {
+      height: 40px;
+    }
+
+    .nav-links a {
       text-decoration: none;
-      font-weight: 600;
-      position: relative;
-      padding: 8px 12px;
-      transition: color 0.3s ease, transform 0.3s ease;
+      margin-left: 24px;
+      color: var(--primary);
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
     }
 
-    .navbar a::after {
-      content: '';
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      left: 0;
-      bottom: 0;
-      background-color: #ffeb3b;
-      transition: width 0.3s ease;
+    .nav-links a:hover {
+      color: var(--accent);
     }
 
-    .navbar a:hover::after {
-      width: 100%;
-    }
-
-    .navbar a:hover {
-      color: #ffeb3b;
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeInLeft {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
+    /* Centered Glassy Box */
     .form-container {
-      margin: auto;
-      background: white;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
       padding: 40px 30px;
-      border-radius: 12px;
       width: 400px;
       text-align: center;
-      margin-top: 120px;
-      border: 3px solid #1976d2;
-      position: relative;
-      z-index: 10;
-
-      /* Animations */
-      animation: 
-        fadeIn 1.2s ease both, 
-        floatUpDown 4s ease-in-out infinite, 
-        glowBorder 6s linear infinite, 
-        shadowPulse 4s ease-in-out infinite;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeSlideIn 1s ease both;
     }
 
-    @keyframes fadeIn {
+    @keyframes fadeSlideIn {
       from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -146,45 +96,10 @@
       }
     }
 
-    /* Floating up and down */
-    @keyframes floatUpDown {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-15px);
-      }
-    }
-
-    /* Glowing border animation cycling colors */
-    @keyframes glowBorder {
-      0%, 100% {
-        border-color: #1976d2;
-        box-shadow: 0 0 10px #1976d2;
-      }
-      33% {
-        border-color: #0288d1;
-        box-shadow: 0 0 20px #0288d1;
-      }
-      66% {
-        border-color: #03a9f4;
-        box-shadow: 0 0 15px #03a9f4;
-      }
-    }
-
-    /* Shadow pulse */
-    @keyframes shadowPulse {
-      0%, 100% {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      }
-      50% {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-      }
-    }
-
     h2 {
       margin-bottom: 20px;
-      color: #1976d2;
+      color: var(--primary);
+      font-weight: 600;
     }
 
     input[type="text"] {
@@ -192,34 +107,35 @@
       padding: 14px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: 0.3s ease;
     }
 
     input[type="text"]:focus {
       outline: none;
-      border-color: #0288d1;
-      box-shadow: 0 0 8px #0288d1;
+      border-color: var(--primary);
+      box-shadow: 0 0 8px var(--primary);
     }
 
     button {
-      padding: 12px 24px;
-      background-color: #1976d2;
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
-      cursor: pointer;
       font-weight: 600;
-      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 10px rgba(25, 118, 210, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
     }
 
     button:hover {
-      background-color: #125ea2;
+      background-color: #125ea8;
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(18, 94, 162, 0.8);
+      box-shadow: 0 6px 16px rgba(18, 94, 162, 0.6);
     }
 
     @media (max-width: 500px) {
@@ -235,8 +151,6 @@
 
       .nav-links {
         margin-top: 10px;
-        flex-direction: column;
-        gap: 10px;
       }
     }
   </style>
@@ -246,7 +160,7 @@
   <!-- Navbar -->
   <%- include('./part/nav') %>
 
-  <!-- Form Box -->
+  <!-- Form -->
   <div class="form-container">
     <h2>Find Patient by ID</h2>
     <form action="/patientdetail/loginID" method="post">
